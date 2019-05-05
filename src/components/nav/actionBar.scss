@@ -1,0 +1,31 @@
+@import '../../theme/_variable.theme.scss';
+
+.action {
+  height: $header-height;
+  color: $inactive-color;
+  .icon {
+    margin: 0 1rem;
+    cursor: pointer;
+    z-index: 9;
+    &:hover {
+      color: $active-color;
+    }
+  }
+
+  img {
+    @include avatar();
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 2px 2px $inactive-color;
+    }
+    & + span {
+      margin-left: 1rem;
+    }
+  }
+  .edit {
+    margin: 0;
+  }
+  .editing {
+    color: #fff;
+  }
+}
