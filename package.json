@@ -24,7 +24,7 @@
     "typescript": "3.4.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=4200 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

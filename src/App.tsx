@@ -2,7 +2,7 @@ import React from 'react';
 import './App.scss';
 import Nav from './components/nav';
 import { Provider } from 'react-redux';
-import { store } from './store';
+import store from './store';
 
 const App: React.FC = () => {
     return (

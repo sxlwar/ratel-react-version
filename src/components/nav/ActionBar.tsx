@@ -1,62 +1,49 @@
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { Motion, spring } from 'react-motion';
 
 import './actionBar.scss';
 
 import React from 'react';
-
-import Icon from '../icon';
+import { Motion, spring } from 'react-motion';
 import { connect } from 'react-redux';
+
 import { StoreState } from '../../store/model/model';
-import { toggleSearchBox, selectNav } from '../../store/slices/nav';
+import { selectNav, toggleSearchBox } from '../../store/slices/nav';
+import { selectUser } from '../../store/slices/user';
+import Icon from '../icon';
+import ControlCenter from './ControlCenter';
+import Login from './Login';
 
 interface Props {
-  showSearch: boolean;
-  //   isLogin: boolean;
-  toggleSearchBox: any;
+    showSearch: boolean;
+    toggleSearchBox: any;
+    hasLogin: boolean;
 }
 
-const theme = createMuiTheme({
-  palette: {
-    grey: {
-      A100: '#434343',
-      300: '#434343'
-    }
-  },
-  typography: {
-    useNextVariants: true
-  }
-});
+function ActionBar({ showSearch, toggleSearchBox, hasLogin }: Props) {
+    return (
+        <div className="action">
+            <Motion style={{ x: spring(showSearch ? 0 : 100) }}>
+                {({ x }) => (
+                    <TextField
+                        id="search-content"
+                        label="请输入文章标题"
+                        style={{
+                            transform: `translateX(${x}%)`,
+                            marginBottom: '1.125em',
+                            opacity: (100 - x) / 100
+                        }}
+                    />
+                )}
+            </Motion>
 
-function ActionBar({ showSearch, toggleSearchBox }: Props) {
-  return (
-    <div className="action">
-      <Motion style={{ x: spring(showSearch ? 0 : 100) }}>
-        {({ x }) => (
-          <TextField
-            id="search-content"
-            label="请输入文章标题"
-            style={{
-              transform: `translateX(${x}%)`,
-              marginBottom: '1.125em',
-              opacity: (100 - x) / 100
-            }}
-          />
-        )}
-      </Motion>
+            <Icon icon="search" className="icon" handler={{ onClick: () => toggleSearchBox() }} />
 
-      <Icon icon="search" className="icon" handler={{ onClick: () => toggleSearchBox() }} />
-
-      <MuiThemeProvider theme={theme}>
-        <Button variant="contained">登录</Button>
-      </MuiThemeProvider>
-    </div>
-  );
+            {hasLogin ? <ControlCenter /> : <Login />}
+        </div>
+    );
 }
 
 export default connect(
-  (state: StoreState) => selectNav(state),
-  { toggleSearchBox }
+    (state: StoreState) => ({ ...selectNav(state), hasLogin: !!selectUser(state).user }),
+    { toggleSearchBox }
 )(ActionBar);

@@ -1,5 +1,5 @@
+import { createSelector, createSlice, PayloadAction, SliceActionCreator } from 'redux-starter-kit';
 import { NavItem } from '../../components/nav/NavMenu';
-import { PayloadAction, SliceActionCreator, createSlice, createSelector } from 'redux-starter-kit';
 import { StoreState } from '../model/model';
 
 export interface NavState {
