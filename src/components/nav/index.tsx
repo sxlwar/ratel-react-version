@@ -6,15 +6,16 @@ import ActionBar from './ActionBar';
 import { Motion, spring } from 'react-motion';
 import { connect } from 'react-redux';
 import { StoreState } from '../../store/model/model';
-import { selectSearchBox } from '../../store/slices/nav';
-import { login, LoginPayload } from '../../store/slices/user';
+import { selectSearchBox } from '../../store/slices/nav.slice';
+import { login, LoginPayload, selectUser, UserState } from '../../store/slices/user.slice';
 
 interface Props {
     showSearch: boolean;
+    user: UserState;
     login: (payload: LoginPayload) => any;
 }
 
-function Nav({ showSearch, login }: Props) {
+function Nav({ showSearch, user: { user, expireCodes }, login }: Props) {
     useEffect(() => {
         const search = window.location.search;
         const payload = search
@@ -24,6 +25,10 @@ function Nav({ showSearch, login }: Props) {
                   .map(item => item.split('='))
                   .reduce((acc: object, [key, value]) => ({ ...acc, [key]: value }), {}) as LoginPayload)
             : null;
+
+        if ((payload && expireCodes.includes(payload.code)) || !!user) {
+            return;
+        }
 
         login(payload);
     });
@@ -50,7 +55,8 @@ function Nav({ showSearch, login }: Props) {
 export default connect(
     (state: StoreState) =>
         ({
-            showSearch: selectSearchBox(state)
+            showSearch: selectSearchBox(state),
+            user: selectUser(state)
         } as Props),
     { login }
 )(Nav);

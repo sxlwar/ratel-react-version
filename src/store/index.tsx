@@ -2,19 +2,20 @@ import { Action } from 'redux';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
 import { StoreState } from './model/model';
-import { navReducer, navSlice } from './slices/nav';
-import { loginEpic, userReducer, userSlice } from './slices/user';
+import epics from './epics';
+import reducer from './slices';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'connected-react-router'
 
-const rootEpic: any = combineEpics(loginEpic);
+export const history = createBrowserHistory();
+
+const rootEpic: any = combineEpics.apply(combineEpics, Object.values(epics));
 
 const epicMiddleware = createEpicMiddleware<Action>();
 
 const store = configureStore<StoreState, Action>({
-    reducer: {
-        [userSlice]: userReducer,
-        [navSlice]: navReducer
-    },
-    middleware: [...getDefaultMiddleware(), epicMiddleware]
+    reducer: reducer(history),
+    middleware: [...getDefaultMiddleware(), epicMiddleware, routerMiddleware(history)]
 });
 
 epicMiddleware.run(rootEpic);

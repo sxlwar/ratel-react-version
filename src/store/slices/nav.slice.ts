@@ -50,3 +50,7 @@ export const selectSearchBox = createSelector<StoreState, boolean>(
     [selectNav],
     (state: NavState) => state.showSearch
 );
+
+export default {
+    [navSlice]: navReducer,
+}

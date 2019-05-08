@@ -7,8 +7,8 @@ import { Motion, spring } from 'react-motion';
 import { connect } from 'react-redux';
 
 import { StoreState } from '../../store/model/model';
-import { selectNav, toggleSearchBox } from '../../store/slices/nav';
-import { selectUser } from '../../store/slices/user';
+import { selectNav, toggleSearchBox } from '../../store/slices/nav.slice';
+import { selectUser } from '../../store/slices/user.slice';
 import Icon from '../icon';
 import ControlCenter from './ControlCenter';
 import Login from './Login';

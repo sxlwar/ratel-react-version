@@ -3,12 +3,9 @@ import Button from '@material-ui/core/Button';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 
-import { connect } from 'react-redux';
 import React, { useState } from 'react';
 import Icon from '../icon';
 
-import { StoreState } from '../../store/model/model';
-import { login, LoginPayload, selectUser, UserState } from '../../store/slices/user';
 import authService from '../../service/auth.service';
 
 const theme = createMuiTheme({
@@ -44,11 +41,7 @@ const DialogButton = withStyles({
     }
 })(Button);
 
-interface LoginProps extends UserState {
-    login: (payload: LoginPayload) => any;
-}
-
-function Login({ user, login }: LoginProps) {
+function Login() {
     const [open, handleOpen] = useState(false);
     const close = () => handleOpen(false);
     const getLoginConfig = () => {
@@ -87,7 +80,4 @@ function Login({ user, login }: LoginProps) {
     );
 }
 
-export default connect(
-    (state: StoreState) => selectUser(state),
-    { login }
-)(Login);
+export default Login;

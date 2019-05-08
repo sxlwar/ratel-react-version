@@ -1,5 +1,5 @@
-import { NavState } from '../slices/nav';
-import { UserState } from '../slices/user';
+import { NavState } from '../slices/nav.slice';
+import { UserState } from '../slices/user.slice';
 
 export interface StoreState {
     user: UserState;

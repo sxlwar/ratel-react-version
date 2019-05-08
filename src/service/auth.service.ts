@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
-import { catchError, filter, map, mergeMap, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 import { GithubAuthConfig, User } from './model/auth.interface';
@@ -70,7 +70,9 @@ class AuthService extends BaseService {
     }
 
     public loginAsGithubUser(code: string, state: string): Observable<User> {
-        return this._http.get<User>(this.completeApiUrl(this.path, this.githubLoginPath), { params: { code, state } });
+        return this._http
+            .get<User>(this.completeApiUrl(this.path, this.githubLoginPath), { params: { code, state } })
+            .pipe(tap(user => user && this.storeUserId(user.githubId)));
     }
 
     private storeUserId(id: number): void {
@@ -81,7 +83,7 @@ class AuthService extends BaseService {
         localStorage.removeItem(this.storedUserId);
     }
 
-    private getUserId(): number | null {
+    public getUserId(): number | null {
         return this.isBrowser ? (+localStorage.getItem(this.storedUserId) as number) : null;
     }
 
@@ -94,26 +96,22 @@ class AuthService extends BaseService {
         if (id) {
             return this._http
                 .post<User>(this.completeApiUrl(this.path, this.userInfoPath), { id })
-                .pipe(catchError(this._error.handleHttpError))
+                .pipe(catchError(this._error.handleHttpError));
         } else {
-            return of(null)
+            return of(null);
         }
     }
 
     /**
      * 通知服务器删除用户信息，同时删除本地的用户id
      */
-    logout(): Subscription {
+    logout(): Observable<LogoutResponse> {
         return this._http
             .post<LogoutResponse>(this.completeApiUrl(this.path, this.logoutPath), { id: this.getUserId() })
-            .pipe(catchError(this._error.handleHttpError))
-            .subscribe((res: LogoutResponse) => {
-                if (res.isLogout) {
-                    this.clearUserId();
-
-                    this.user$.next(null);
-                }
-            });
+            .pipe(
+                tap(res => res.isLogout && this.clearUserId()),
+                catchError(this._error.handleHttpError)
+            );
     }
 
     /**
