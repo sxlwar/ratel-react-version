@@ -28,7 +28,7 @@ export type LogoutPayload = void;
 export type LogoutAction = PayloadAction<LogoutPayload>;
 export type LogoutCreator = SliceActionCreator<LogoutPayload>;
 
-export type LogoutResponsePayload = boolean;
+export type LogoutResponsePayload = Boolean;
 export type LogoutResponseAction = PayloadAction<LogoutResponsePayload>;
 export type LogoutResponseCreator = SliceActionCreator<LogoutResponsePayload>;
 
@@ -61,7 +61,7 @@ export const {
 });
 
 export const selectUser = createSelector<StoreState, UserState>([userSlice]);
-export const selectExpiredCods = createSelector<UserState, string[]>(
+export const selectExpiredCodes = createSelector<StoreState, string[]>(
     [selectUser],
     (state: UserState) => state.expireCodes
 );

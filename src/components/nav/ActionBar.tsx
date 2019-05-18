@@ -1,3 +1,5 @@
+import red from '@material-ui/core/colors/red';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 import './actionBar.scss';
@@ -19,22 +21,38 @@ interface Props {
     hasLogin: boolean;
 }
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            light: red['500'],
+            main: red['700'],
+            dark: red['900']
+        },
+        type: 'dark'
+    },
+    typography: {
+        useNextVariants: true
+    }
+});
+
 function ActionBar({ showSearch, toggleSearchBox, hasLogin }: Props) {
     return (
         <div className="action">
-            <Motion style={{ x: spring(showSearch ? 0 : 100) }}>
-                {({ x }) => (
-                    <TextField
-                        id="search-content"
-                        label="请输入文章标题"
-                        style={{
-                            transform: `translateX(${x}%)`,
-                            marginBottom: '1.125em',
-                            opacity: (100 - x) / 100
-                        }}
-                    />
-                )}
-            </Motion>
+            <MuiThemeProvider theme={theme}>
+                <Motion style={{ x: spring(showSearch ? 0 : 100) }}>
+                    {({ x }) => (
+                        <TextField
+                            id="search-content"
+                            label="请输入文章标题"
+                            style={{
+                                transform: `translateX(${x}%)`,
+                                marginBottom: '1.125em',
+                                opacity: (100 - x) / 100
+                            }}
+                        />
+                    )}
+                </Motion>
+            </MuiThemeProvider>
 
             <Icon icon="search" className="icon" handler={{ onClick: () => toggleSearchBox() }} />
 

@@ -1,27 +1,26 @@
-// import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
-// import { MatSnackBar } from '@angular/material/snack-bar';
-// import { isPlatformBrowser } from '@angular/common';
-
 import { Observable, throwError } from 'rxjs';
 
-import { BaseService } from './base.service';
+import { MessageService } from './message.service';
 
-export class ErrorService extends BaseService {
-    // private isBrowser = isPlatformBrowser(this.platformId);
 
-    // constructor(private _snack: MatSnackBar, @Inject(PLATFORM_ID) private platformId: Object) {
+export class ErrorService extends MessageService {
+    private static _instance: ErrorService;
 
     handleHttpError = (error: any): Observable<any> => {
         const exception = error.error;
 
-        // if (this.isBrowser) {
         if (exception instanceof ErrorEvent) {
             console.error(exception.message);
         } else {
-            // this._snack.open(exception.message, '', this.snakeBarConfig);
+            this.showErrorMessage(exception.message);
         }
-        // }
 
         return throwError(error); // 这个错误不要随便抛，否则会导致服务端渲染时后台代码报错： can't read ngOriginError of undefined;
     };
+
+    public static get instance(): ErrorService {
+        return this._instance || (this._instance = new this());
+    }
 }
+
+export default ErrorService;

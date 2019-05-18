@@ -1,0 +1,115 @@
+@import '../../theme/_variable.theme';
+
+$white-space: 2em;
+
+.toolbar {
+    padding: 0 1em;
+    background: rgba(#ccc, 0.3);
+    .icon {
+        color: $active-deep-green;
+    }
+    .btn:first-child button {
+        @include fileSelectWrapper();
+    }
+    li:last-child {
+        color: $inactive-color;
+        font-size: 12px;
+        margin-left: 2em;
+    }
+}
+
+.file-select-btn {
+    @include fileSelectWrapper();
+}
+
+.full-model {
+    background: #fff;
+    height: calc(100vh - 189px);
+    overflow-x: hidden;
+    .editor,
+    .preview {
+        border: 1px solid $inactive-color;
+        border-radius: 4px;
+        position: relative;
+        flex: 1 1 100%;
+        max-width: 48%;
+        box-sizing: border-box;
+    }
+    .preview {
+        padding: $white-space;
+        overflow: scroll;
+        margin-left: 4%;
+    }
+    .submit {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+    }
+}
+
+.container {
+    background: #fff;
+    padding: $white-space * 2 0 $white-space;
+    .form-field {
+        margin: 1em 0;
+        & > span {
+            margin-right: 2em;
+        }
+
+        mat-checkbox,
+        mat-radio-button {
+            margin: 0 1em;
+        }
+        button {
+            transform: translateY(-25%);
+            @include fileSelectWrapper();
+        }
+    }
+    .thumbnail {
+        width: 50%;
+        height: 150px;
+        image-cropper {
+            text-align: left !important;
+        }
+        img {
+            padding: 5px;
+        }
+    }
+}
+
+.CodeMirror {
+    padding: 1em;
+    height: 95%;
+}
+
+// for markdown
+.preview {
+    blockquote {
+        border-left: 0.25em solid #dfe2e5;
+        color: #6a737d;
+        padding: 0 1em;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        tr {
+            background-color: #fff;
+            border-top: 1px solid #c6cbd1;
+            &:nth-child(2n) {
+                background-color: #f6f8fa;
+            }
+        }
+
+        th,
+        td {
+            border: 1px solid #dfe2e5;
+            padding: 6px 13px;
+        }
+    }
+    & > p {
+        text-indent: 2em;
+    }
+    img {
+        max-width: 100%;
+    }
+}

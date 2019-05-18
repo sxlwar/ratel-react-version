@@ -33,15 +33,10 @@ class AuthService extends BaseService {
     // isBrowser = isPlatformBrowser(this._platformId);
     isBrowser = true;
 
-    private _error: ErrorService;
-
-    private _http: HttpService;
+    private _http: HttpService = HttpService.instance;
 
     constructor() {
         super();
-
-        this._error = new ErrorService();
-        this._http = new HttpService();
 
         // if (this.isBrowser) {
         //     this.monitorGithubUserInfo();
@@ -96,7 +91,7 @@ class AuthService extends BaseService {
         if (id) {
             return this._http
                 .post<User>(this.completeApiUrl(this.path, this.userInfoPath), { id })
-                .pipe(catchError(this._error.handleHttpError));
+                .pipe(catchError(ErrorService.instance.handleHttpError));
         } else {
             return of(null);
         }
@@ -110,7 +105,7 @@ class AuthService extends BaseService {
             .post<LogoutResponse>(this.completeApiUrl(this.path, this.logoutPath), { id: this.getUserId() })
             .pipe(
                 tap(res => res.isLogout && this.clearUserId()),
-                catchError(this._error.handleHttpError)
+                catchError(ErrorService.instance.handleHttpError)
             );
     }
 
@@ -127,7 +122,7 @@ class AuthService extends BaseService {
                         config.state
                     }`
             ),
-            catchError(this._error.handleHttpError)
+            catchError(ErrorService.instance.handleHttpError)
         );
     }
 

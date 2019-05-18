@@ -34,7 +34,7 @@ const intros: IntroProps[] = [
     {
         img: typescriptlang,
         intro: 'TypeScript 是 JavaScript的超集，它可以编译出纯净、简洁的JavaScript代码。',
-        officeAddress: 'http://www.typescriptlang.org'
+        officeAddress: 'https://www.typescriptlang.org'
     },
     {
         img: angular,

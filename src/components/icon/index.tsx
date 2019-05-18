@@ -11,7 +11,7 @@ interface Props {
 function Icon({ icon, style, className, handler }: Props) {
     const name = `icon-${icon}`;
 
-    return <span className={name + ' ' + className} style={{ ...style }} {...handler} />;
+    return <span className={name + ' ' + (className || '')} style={{ ...style }} {...handler} />;
 }
 
 export default Icon;

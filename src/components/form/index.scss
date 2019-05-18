@@ -3,6 +3,14 @@
 
 $white-space: 2em;
 
+$width: 270px;
+$height: 150px;
+
+@mixin fixSize {
+    width: $width !important;
+    height: $height !important;
+}
+
 .ratel-form-field {
     box-sizing: border-box;
     background: #fff;
@@ -23,29 +31,49 @@ $white-space: 2em;
         }
     }
     .thumbnail {
+        display: flex;
         width: 50%;
-        height: 150px;
-        image-cropper {
-            text-align: left !important;
+        height: $height;
+        justify-content: space-between;
+        margin-top: 1em;
+        .cropper {
+            width: $width;
         }
-        img {
-            padding: 5px;
+        .image-preview {
+            overflow: hidden;
+            @include fixSize();
+        }
+        .cropper-container {
+            @include fixSize();
+        }
+        .cropper-modal {
+            background-color: transparent;
+        }
+        .cropper-canvas {
+            @include fixSize();
+            transform: none !important;
+            & img {
+                display: none;
+            }
+        }
+        .cropper-wap-box {
+            overflow: initial;
         }
     }
 }
 
 .submit {
-    padding: 0 $white-space 1em;
+    padding: 0 0 1em;
     background: #fff;
     button:last-child {
         margin-left: 2em;
     }
 }
 
-:host::ng-deep markdown img {
-    max-width: 100%;
-}
+// :host::ng-deep markdown img {
+//     max-width: 100%;
+// }
 
-:host::ng-deep image-cropper .cropper {
-    margin-left: 0 !important;
-}
+// :host::ng-deep image-cropper .cropper {
+//     margin-left: 0 !important;
+// }

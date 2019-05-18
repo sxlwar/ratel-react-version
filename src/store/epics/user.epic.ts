@@ -19,7 +19,8 @@ const loginEpic = (action$: Observable<LoginAction>, state$: StateObservable<Sto
             } else {
                 source = authService.checkLoginState();
             }
-            return source.pipe(map(res => ({ type: loginResponse.toString(), payload: res })));
+
+            return source.pipe(map(res => loginResponse(res)))
         })
     );
 
@@ -27,7 +28,7 @@ const logoutEpic = (action$: Observable<LogoutAction>, state$: StateObservable<S
     action$.pipe(
         ofType(logout.toString()),
         tap(v => console.log(v)),
-        switchMap(_ => authService.logout().pipe(map(res => ({ type: logoutResponse.toString(), payload: res.isLogout }))))
+        switchMap(_ => authService.logout().pipe(map(res => logoutResponse(res.isLogout))))
     );
 
 export default {
