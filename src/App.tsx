@@ -12,6 +12,7 @@ import Topic from './components/topic';
 import store, { history } from './store';
 import './App.scss';
 import SnackBar from './components/tip/snackbar';
+import Alert from './components/tip/alert';
 
 const routes: RouteProps[] = [
     { path: '/home', component: Home, exact: true },
@@ -36,6 +37,7 @@ const App: React.FC = () => {
                 </ConnectedRouter>
             </div>
             <SnackBar />
+            <Alert />
         </Provider>
     );
 };

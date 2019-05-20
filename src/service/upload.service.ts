@@ -4,9 +4,8 @@ import { catchError, delay, filter, map, mergeMap, take, takeUntil, timeout, swi
 
 import { ALLOW_UPLOAD_FILE_TYPES, CRUDVar, QiniuErrorCode } from '../constant/constant';
 import { GetQiniuTokenResponse } from './model/response.interface';
-import { BaseService } from './base.service';
 import { HttpService } from './http.service';
-import ErrorService from './error.service';
+import { MessageService } from './message.service';
 
 export interface UploadResult {
     name: string;
@@ -17,7 +16,7 @@ export interface UploadResult {
     };
 }
 
-export class UploadService extends BaseService {
+export class UploadService extends MessageService {
     private static _instance: UploadService;
 
     private readonly path = 'upload';
@@ -109,7 +108,7 @@ export class UploadService extends BaseService {
     private tokenError(err: any): void {
         this.reset();
 
-        ErrorService.instance.showErrorMessage(`上传失败或请求超时！错误原因：${err.message}`);
+        this.showErrorMessage(`上传失败或请求超时！错误原因：${err.message}`);
     }
 
     /**
@@ -132,7 +131,7 @@ export class UploadService extends BaseService {
 
                 spy();
 
-                ErrorService.instance.showErrorMessage(
+                this.showErrorMessage(
                     `第${index + 1}张图片上传失败，失败原因：` + QiniuErrorCode[code]
                 );
             },
@@ -143,9 +142,9 @@ export class UploadService extends BaseService {
 
                 if (this.uploadedCount === this.uploadTotal) {
                     if (this.uploadResults.some(item => !!item.error)) {
-                        ErrorService.instance.showWarningMessage('部分图片未上传成功！');
+                        this.showWarningMessage('部分图片未上传成功！');
                     } else {
-                        ErrorService.instance.showSuccessMessage('图片上传成功');
+                        this.showSuccessMessage('图片上传成功');
                     }
                 }
             }

@@ -40,9 +40,9 @@ const style = {
     }
 };
 
-function Editor({ classes, upload, onContentChange, tip = '', showBack = false }: Props) {
+function Editor({ classes, upload, onContentChange, value, tip = '', showBack = false }: Props) {
     const [showPreview, toggleShowPreview] = useState(true);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState(value);
     const onCodeMirrorContentChange = (value: string, change: CodeMirror.EditorChangeLinkedList) => {
         setContent(value);
 

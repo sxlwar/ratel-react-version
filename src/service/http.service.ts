@@ -3,11 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseService } from './base.service';
 
-// export interface RequestOptions {
-//     observer?: 'body' | 'event';
-//     params?: { [param: string]: string | string[] };
-//     reportProgress?: boolean;
-// }
+export type RequestMethod = 'GET' | 'PUT' | 'DELETE' | 'UPDATE';
 
 export class HttpService extends BaseService {
     private static _instance: HttpService;
@@ -30,6 +26,18 @@ export class HttpService extends BaseService {
 
     post<T>(url: string, body: object, headers?: Object): Observable<T> {
         return ajax.post(url, body, headers).pipe(map(({ response }: AjaxResponse) => response));
+    }
+
+    put<T>(url: string, body: object, headers?: Object): Observable<T> {
+        return ajax.put(url, body, headers).pipe(map(({ response }: AjaxResponse) => response));
+    }
+
+    request<T>(method: RequestMethod, url: string, body: { [key: string]: any }): Observable<T> {
+        return ajax({
+            url,
+            method,
+            body
+        }).pipe(map(({ response }: AjaxResponse) => response));
     }
 
     public static get instance(): HttpService {

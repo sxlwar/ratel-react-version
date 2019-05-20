@@ -1,3 +1,9 @@
+
+export interface ErrorResponse {
+    statusCode?: number;
+    message?: string;
+}
+
 export interface CreateArticleResponse {
     id: number;
 }
@@ -29,7 +35,7 @@ export interface ArticleUpdateResponse {
     isUpdated: boolean;
 }
 
-export interface ArticleDeleteResponse {
+export interface ArticleDeleteResponse extends ErrorResponse {
     isDeleted: boolean;
 }
 

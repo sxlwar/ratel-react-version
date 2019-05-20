@@ -1,26 +1,21 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { AjaxResponse } from 'rxjs/ajax';
 
 import { MessageService } from './message.service';
+import { apiError } from '../store/slices/error.slice';
+import { tap } from 'rxjs/operators';
+import { ErrorResponse } from './model/model';
+import { PayloadAction } from 'redux-starter-kit';
 
-
-export class ErrorService extends MessageService {
+class ErrorService extends MessageService {
     private static _instance: ErrorService;
 
-    handleHttpError = (error: any): Observable<any> => {
-        const exception = error.error;
-
-        if (exception instanceof ErrorEvent) {
-            console.error(exception.message);
-        } else {
-            this.showErrorMessage(exception.message);
-        }
-
-        return throwError(error); // 这个错误不要随便抛，否则会导致服务端渲染时后台代码报错： can't read ngOriginError of undefined;
-    };
+    handleHttpError = ({ response }: AjaxResponse): Observable<PayloadAction<ErrorResponse, string>> =>
+        of(apiError(response)).pipe(tap(action => this.showErrorMessage(action.payload.message)));
 
     public static get instance(): ErrorService {
         return this._instance || (this._instance = new this());
     }
 }
 
-export default ErrorService;
+export default ErrorService.instance;

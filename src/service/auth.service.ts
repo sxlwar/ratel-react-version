@@ -1,11 +1,10 @@
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
 import { GithubAuthConfig, User } from './model/auth.interface';
 import { LogoutResponse } from './model/response.interface';
 import { BaseService } from './base.service';
-import { ErrorService } from './error.service';
 import { HttpService } from './http.service';
 import UrlDetectorService from './url.detector.service';
 
@@ -91,7 +90,6 @@ class AuthService extends BaseService {
         if (id) {
             return this._http
                 .post<User>(this.completeApiUrl(this.path, this.userInfoPath), { id })
-                .pipe(catchError(ErrorService.instance.handleHttpError));
         } else {
             return of(null);
         }
@@ -105,7 +103,6 @@ class AuthService extends BaseService {
             .post<LogoutResponse>(this.completeApiUrl(this.path, this.logoutPath), { id: this.getUserId() })
             .pipe(
                 tap(res => res.isLogout && this.clearUserId()),
-                catchError(ErrorService.instance.handleHttpError)
             );
     }
 
@@ -122,7 +119,6 @@ class AuthService extends BaseService {
                         config.state
                     }`
             ),
-            catchError(ErrorService.instance.handleHttpError)
         );
     }
 

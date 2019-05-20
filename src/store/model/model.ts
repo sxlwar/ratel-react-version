@@ -1,9 +1,13 @@
-import { NavState } from '../slices/nav.slice';
-import { UserState } from '../slices/user.slice';
-import { TipState } from '../slices/tip.slice';
+import { ErrorResponse } from '../../service/model/model';
 
+/**
+ * 暂时没有定义 StoreState 的形状，避免循环引用
+ */
 export interface StoreState {
-    user: UserState;
-    nav: NavState;
-    tip: TipState;
+}
+
+export interface RestfulState<T, U> {
+    request: T;
+    response: U;
+    error?: ErrorResponse;
 }

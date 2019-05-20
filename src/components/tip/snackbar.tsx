@@ -53,13 +53,19 @@ const styles = (theme: Theme) => ({
     }
 });
 
-interface ProjectSnackBarProps extends SnackbarState {
-    classes?: { [key: string]: any };
-    onClose: () => void;
+interface ProjectSnackBarProps {
+    bars: SnackbarState[];
+    onClose: (payload: SnackbarState) => void;
 }
 
-function ProjectSnackbarContent(props: ProjectSnackBarProps) {
-    const { open, classes, message, variant, onClose, ...other } = props;
+interface ProjectSnackbarContentProps {
+    bar: SnackbarState;
+    onClose: (payload: SnackbarState) => void;
+    classes?: { [key: string]: any };
+}
+
+function ProjectSnackbarContent({ bar, classes, onClose, ...other }: ProjectSnackbarContentProps) {
+    const { variant, message } = bar;
     const Icon = variantIcon[variant];
 
     return (
@@ -73,7 +79,12 @@ function ProjectSnackbarContent(props: ProjectSnackBarProps) {
                 </span>
             }
             action={[
-                <IconButton key="close" aria-label="Close" color="inherit" onClick={() => onClose()}>
+                <IconButton
+                    key="close"
+                    aria-label="Close"
+                    color="inherit"
+                    onClick={() => onClose({ ...bar, open: false })}
+                >
                     <CloseIcon className={classes.icon} />
                 </IconButton>
             ]}
@@ -84,23 +95,27 @@ function ProjectSnackbarContent(props: ProjectSnackBarProps) {
 
 const ProjectSnackbarContentWrapper = withStyles(styles)(ProjectSnackbarContent);
 
-function ProjectSnackbar({ open, message = '', variant = 'info', onClose }: ProjectSnackBarProps) {
+function ProjectSnackbar({ bars, onClose }: ProjectSnackBarProps) {
     return (
-        <div>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                }}
-                open={open}
-            >
-                <ProjectSnackbarContentWrapper {...{ open, message, variant, onClose }} />
-            </Snackbar>
-        </div>
+        <>
+            {bars.map((bar, index) => (
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center'
+                    }}
+                    open={bar.open}
+                    key={bar.timestamp}
+                    style={{ top: index * 66 }}
+                >
+                    <ProjectSnackbarContentWrapper bar={bar} onClose={onClose} />
+                </Snackbar>
+            ))}
+        </>
     );
 }
 
 export default connect(
-    (store: StoreState) => selectSnackbar(store),
+    (store: StoreState) => ({ bars: selectSnackbar(store) }),
     { onClose: closeSnackbar }
 )(ProjectSnackbar);
