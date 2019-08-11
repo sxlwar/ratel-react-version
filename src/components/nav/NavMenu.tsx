@@ -31,13 +31,7 @@ const isActive: PredicateFn<NavItem, string> = (target: NavItem, currentTopic: s
 const routerPath = (target: NavItem): string => {
     let path = '';
 
-    if (target.topic === ArticleCategory.redux) {
-        path =
-            '/' +
-            ArticleCategory.redux.split('_')
-                .join('-')
-                .toLocaleLowerCase();
-    } else if (!target.topic) {
+    if (!target.topic) {
         path = '/home';
     } else {
         path = '/topic/' + target.topic.toLowerCase();
@@ -49,11 +43,13 @@ const routerPath = (target: NavItem): string => {
 const topics: NavItem[] = [
     { label: '首页', topic: '' },
     { label: 'React', topic: ArticleCategory.react },
+    { label: 'ReactNative', topic: ArticleCategory.reactNative },
     { label: 'Rxjs', topic: ArticleCategory.rxjs },
     { label: 'TypeScript', topic: ArticleCategory.typescript },
     { label: 'JavaScript', topic: ArticleCategory.javascript },
+    { label: 'Redux', topic: ArticleCategory.redux },
+    { label: 'Mobox', topic: ArticleCategory.mobox },
     { label: 'Other', topic: ArticleCategory.other },
-    { label: 'Redux', topic: ArticleCategory.redux }
 ];
 
 function NormalMenu({ active, toggleTopic, push }: Props) {

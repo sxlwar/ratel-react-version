@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import Intro from './Intro';
 
 function Home() {
     return (
-        <>
+        <Fragment>
             <Intro />
             {/* <Button variant="contained" onClick={() => message.showErrorMessage('xxxxx')}>
                 snackbar
@@ -15,7 +15,7 @@ function Home() {
             >
                 dialog
             </Button> */}
-        </>
+        </Fragment>
     );
 }
 

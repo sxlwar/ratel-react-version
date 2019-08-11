@@ -3,7 +3,7 @@ import './App.scss';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
+import { Route, RouteProps, Switch } from 'react-router-dom';
 
 import CreateComponent from './components/create';
 import HomeComponent from './components/home';
@@ -16,7 +16,7 @@ import Alert from './components/tip/alert';
 
 const routes: RouteProps[] = [
     { path: '/home', component: HomeComponent, exact: true },
-    {path: '/topc/react', component: TopicComponent},
+    { path: '/topic', component: TopicComponent },
     { path: '/create', component: CreateComponent }
 ];
 
@@ -26,13 +26,11 @@ const App: React.FC = () => {
             <Nav />
             <div id='content'>
                 <ConnectedRouter history={history}>
-                    <>
-                        <Switch>
-                            {routes.map((route, idx) => (
-                                <Route key={idx} path={route.path} component={route.component} exact={route.exact} />
-                            ))}
-                        </Switch>
-                    </>
+                    <Switch>
+                        {routes.map((route, idx) => (
+                            <Route key={idx} path={route.path} component={route.component} exact={route.exact} />
+                        ))}
+                    </Switch>
                 </ConnectedRouter>
             </div>
             <SnackBar />
