@@ -11,7 +11,7 @@ import './index.scss';
 
 import { Field, Formik, FormikProps, FieldProps } from 'formik';
 import { fieldToCheckbox, TextField } from 'formik-material-ui';
-import React, { useEffect, ChangeEvent } from 'react';
+import React, { useEffect, ChangeEvent, Fragment } from 'react';
 import ReactCropper, { default as Cropper } from 'react-cropper';
 import * as Yup from 'yup';
 
@@ -282,7 +282,7 @@ const ThumbnailField = ({ classes, ...props }: CreationFieldProps) => {
 
     return (
         isCustomThumbnail && (
-            <>
+            <Fragment>
                 <div className="thumbnail">
                     <Cropper
                         ref={cropper => {
@@ -297,7 +297,7 @@ const ThumbnailField = ({ classes, ...props }: CreationFieldProps) => {
                     <div className="image-preview" />
                 </div>
                 {errorMessage && <FormHelperText error>{errorMessage}</FormHelperText>}
-            </>
+            </Fragment>
         )
     );
 };
@@ -305,7 +305,7 @@ const ThumbnailField = ({ classes, ...props }: CreationFieldProps) => {
 /**
  * * 表单控件 文章内容 组件传递修改方法给编辑器以使编辑器可以修改 content 字段的内容
  */
-const ContentField = ({ field, form }:  FieldProps<ArticleCreation>) => {
+const ContentField = ({ field, form }: FieldProps<ArticleCreation>) => {
     const name = field.name;
     const { content: tip } = form.errors;
     const onContentChange = (name: string) => (content: string) => {
@@ -361,17 +361,17 @@ const Submit = ({ isUpdate, isPublished, submit, createArticle, updateArticle, i
                     </Button>
                 </>
             ) : (
-                <>
-                    {!isPublished && (
-                        <Button variant="contained" color="primary" onClick={updateFactory(true)}>
-                            更新并发表
+                    <>
+                        {!isPublished && (
+                            <Button variant="contained" color="primary" onClick={updateFactory(true)}>
+                                更新并发表
                         </Button>
-                    )}
-                    <Button variant="contained" color="secondary" onClick={updateFactory()}>
-                        仅更新
+                        )}
+                        <Button variant="contained" color="secondary" onClick={updateFactory()}>
+                            仅更新
                     </Button>
-                </>
-            )}
+                    </>
+                )}
         </div>
     );
 };
@@ -392,7 +392,7 @@ function ArticleForm({ id, article, classes }: ArticleFormProps) {
         <Formik
             initialValues={initForm(article)}
             validationSchema={ArticleFormSchema}
-            onSubmit={() => {}}
+            onSubmit={() => { }}
             render={(props: FormikProps<ArticleCreation>) => (
                 <form className={classes['ratel-form-field'] + ' ratel-form-field'}>
                     <MuiThemeProvider theme={theme}>
