@@ -17,10 +17,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            img {
+                width: 110px;
+                height: 110px;
+            }
         }
-    }
-    img {
-        width: 110px;
     }
     li:first-child {
         left: 0;

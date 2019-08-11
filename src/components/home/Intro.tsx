@@ -1,7 +1,7 @@
 import './intro.scss';
 
 import React from 'react';
-
+import ReactPng from '../../assets/images/react.svg';
 import angular from '../../assets/images/angular.png';
 import rxjs from '../../assets/images/rxjs.png';
 import typescriptlang from '../../assets/images/typescript.png';
@@ -37,9 +37,9 @@ const intros: IntroProps[] = [
         officeAddress: 'https://www.typescriptlang.org'
     },
     {
-        img: angular,
-        intro: 'Angular 是一个开发平台，它能帮你更轻松的构建 Web 应用。',
-        officeAddress: 'https://angular.io'
+        img: ReactPng,
+        intro: 'React 是一个基于 JavaScript 的 UI Library，它能帮你更轻松的构建 Web 应用。',
+        officeAddress: 'https://reactjs.org/'
     },
     {
         img: rxjs,

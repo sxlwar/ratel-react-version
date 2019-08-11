@@ -31,10 +31,10 @@ const isActive: PredicateFn<NavItem, string> = (target: NavItem, currentTopic: s
 const routerPath = (target: NavItem): string => {
     let path = '';
 
-    if (target.topic === ArticleCategory.NGX_FORMLY_ZORRO) {
+    if (target.topic === ArticleCategory.redux) {
         path =
             '/' +
-            ArticleCategory.NGX_FORMLY_ZORRO.split('_')
+            ArticleCategory.redux.split('_')
                 .join('-')
                 .toLocaleLowerCase();
     } else if (!target.topic) {
@@ -48,12 +48,12 @@ const routerPath = (target: NavItem): string => {
 
 const topics: NavItem[] = [
     { label: '首页', topic: '' },
-    { label: 'Angular', topic: ArticleCategory.angular },
+    { label: 'React', topic: ArticleCategory.react },
     { label: 'Rxjs', topic: ArticleCategory.rxjs },
     { label: 'TypeScript', topic: ArticleCategory.typescript },
     { label: 'JavaScript', topic: ArticleCategory.javascript },
     { label: 'Other', topic: ArticleCategory.other },
-    { label: 'NGX_FORMLY_ZORRO', topic: ArticleCategory.NGX_FORMLY_ZORRO }
+    { label: 'Redux', topic: ArticleCategory.redux }
 ];
 
 function NormalMenu({ active, toggleTopic, push }: Props) {

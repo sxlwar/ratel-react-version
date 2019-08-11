@@ -2,7 +2,7 @@ import React from 'react';
 
 function Topic() {
     return (
-        <div>Topic component</div>
+        <div>React Topic component</div>
     )
 }
 

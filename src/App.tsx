@@ -5,19 +5,19 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 
-import Create from './components/create';
-import Home from './components/home';
+import CreateComponent from './components/create';
+import HomeComponent from './components/home';
 import Nav from './components/nav';
-import Topic from './components/topic';
+import TopicComponent from './components/topic';
 import store, { history } from './store';
 import './App.scss';
 import SnackBar from './components/tip/snackbar';
 import Alert from './components/tip/alert';
 
 const routes: RouteProps[] = [
-    { path: '/home', component: Home, exact: true },
-    { path: '/topic/angular', component: Topic },
-    { path: '/create', component: Create }
+    { path: '/home', component: HomeComponent, exact: true },
+    {path: '/topc/react', component: TopicComponent},
+    { path: '/create', component: CreateComponent }
 ];
 
 const App: React.FC = () => {
@@ -31,7 +31,6 @@ const App: React.FC = () => {
                             {routes.map((route, idx) => (
                                 <Route key={idx} path={route.path} component={route.component} exact={route.exact} />
                             ))}
-                            <Redirect from="/" to="/home" />
                         </Switch>
                     </>
                 </ConnectedRouter>

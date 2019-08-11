@@ -7,12 +7,12 @@ export enum CRUDVar {
 }
 
 export enum ArticleCategory {
-    angular = 'angular',
+    react = 'react',
     rxjs = 'rxjs',
     typescript = 'typescript',
     javascript = 'javascript',
     other = 'other',
-    NGX_FORMLY_ZORRO = 'NGX_FORMLY_ZORRO'
+    redux = 'redux'
 }
 
 export const QiniuErrorCode: { [key: number]: string } = {
