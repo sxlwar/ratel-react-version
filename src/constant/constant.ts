@@ -8,11 +8,13 @@ export enum CRUDVar {
 
 export enum ArticleCategory {
     react = 'react',
+    reactNative = 'reactNative',
     rxjs = 'rxjs',
     typescript = 'typescript',
     javascript = 'javascript',
+    redux = 'redux',
+    mobox = 'mobox',
     other = 'other',
-    redux = 'redux'
 }
 
 export const QiniuErrorCode: { [key: number]: string } = {
