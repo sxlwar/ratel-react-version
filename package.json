@@ -16,7 +16,7 @@
     "connected-react-router": "^6.4.0",
     "formik": "^1.5.4",
     "formik-material-ui": "0.0.16",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prismjs": "^1.16.0",
     "qiniu-js": "^2.5.3",
     "react": "^16.8.6",
